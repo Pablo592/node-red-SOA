@@ -8,10 +8,10 @@
         "env": []
     },
     {
-        "id": "e6c0d6c8e0ae1dac",
+        "id": "2220b6480caa0384",
         "type": "tab",
-        "label": "Configuración",
-        "disabled": true,
+        "label": "Flow 1",
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -279,22 +279,26 @@
         ],
         "out": [
             {
-                "x": 840,
-                "y": 160,
+                "x": 1280,
+                "y": 140,
                 "wires": [
                     {
                         "id": "eac6eeb13fe60de7",
+                        "port": 0
+                    },
+                    {
+                        "id": "a4bf9ccb98a8748d",
                         "port": 0
                     }
                 ]
             },
             {
-                "x": 680,
-                "y": 220,
+                "x": 1020,
+                "y": 140,
                 "wires": [
                     {
-                        "id": "85857c529a8ec347",
-                        "port": 0
+                        "id": "eac6eeb13fe60de7",
+                        "port": 1
                     }
                 ]
             }
@@ -313,7 +317,7 @@
         "id": "e8aea52a602961ef",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "mosquitto_soa",
+        "broker": "10.147.17.83",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -960,7 +964,7 @@
                 "p": "payload",
                 "pt": "msg",
                 "to": "token",
-                "tot": "msg"
+                "tot": "global"
             }
         ],
         "action": "",
@@ -970,33 +974,6 @@
         "reg": false,
         "x": 830,
         "y": 160,
-        "wires": [
-            [
-                "8492c088d2e80529"
-            ]
-        ]
-    },
-    {
-        "id": "8492c088d2e80529",
-        "type": "change",
-        "z": "4d94a1326bb61b2a",
-        "name": "",
-        "rules": [
-            {
-                "t": "move",
-                "p": "token",
-                "pt": "msg",
-                "to": "token",
-                "tot": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1000,
-        "y": 220,
         "wires": [
             []
         ]
@@ -1094,8 +1071,8 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 530,
-        "y": 240,
+        "x": 890,
+        "y": 80,
         "wires": [
             [
                 "eac6eeb13fe60de7"
@@ -1111,7 +1088,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\n    \"fechaHoraRecepcion\":\"\",\n    \"rawData\":{\n        \"temperatura\":\"{{payload.rawData.temperatura}}\",\n        \"humedad\":\"{{payload.rawData.humedad}}\",\n        \"presion\":\"{{payload.rawData.presion}}\"\n    },\n    \"categoria\":\"{{payload.categoria}}\",\n    \"subCategoria\":\"{{payload.subCategoria}}\",\n    \"identificador\":\"{{payload.identificador}}\"\n}",
+        "template": "{\n    \"fechaHoraRecepcion\":\"\",\n    \"rawData\":{\n        \"temperatura\":\"{{payload.rawData.temperatura}}\",\n        \"humedad\":\"{{payload.rawData.humedad}}\",\n        \"presion\":\"{{payload.rawData.presion}}\"\n    },\n    \"ubicacion\":{\n        \"ciudad\":\"{{payload.ubicacion.ciudad}}\",\n        \"region\":\"{{payload.ubicacion.region}}\",\n        \"pais\":\"{{payload.ubicacion.pais}}\",\n        \"coordenadas\":\"{{payload.ubicacion.coordenadas}}\",\n        \"codigoPostal\":\"{{payload.ubicacion.codigoPostal}}\",\n        \"zonaHoraria\":\"{{payload.ubicacion.zonaHoraria}}\"\n    },\n    \"categoria\":\"{{payload.categoria}}\",\n    \"subCategoria\":\"{{payload.subCategoria}}\",\n    \"identificador\":\"{{payload.identificador}}\"\n}",
         "output": "json",
         "x": 310,
         "y": 80,
@@ -1153,14 +1130,20 @@
                 "t": "eq",
                 "v": "403",
                 "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "403",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
-        "x": 710,
-        "y": 160,
+        "outputs": 2,
+        "x": 1090,
+        "y": 80,
         "wires": [
+            [],
             []
         ]
     },
@@ -1183,7 +1166,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 520,
+        "x": 540,
         "y": 80,
         "wires": [
             [
@@ -1192,12 +1175,27 @@
         ]
     },
     {
+        "id": "a4bf9ccb98a8748d",
+        "type": "catch",
+        "z": "8af27b7d138b7544",
+        "name": "",
+        "scope": [
+            "c262730f8caecead"
+        ],
+        "uncaught": false,
+        "x": 1030,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "7de4b7a2e4130353",
         "type": "mqtt in",
         "z": "698bdcf08b44c5be",
         "name": "",
         "topic": "casa/habitacion/tempHum",
-        "qos": "1",
+        "qos": "2",
         "datatype": "json",
         "broker": "e8aea52a602961ef",
         "nl": false,
@@ -1208,7 +1206,8 @@
         "y": 80,
         "wires": [
             [
-                "cbc83ec7c5495892"
+                "cbc83ec7c5495892",
+                "146c73fe49f8276a"
             ]
         ]
     },
@@ -1220,12 +1219,12 @@
         "env": [
             {
                 "name": "Url_base",
-                "value": "http://10.147.17.191:8080/",
+                "value": "http://10.147.17.129:8080/",
                 "type": "str"
             }
         ],
-        "x": 740,
-        "y": 80,
+        "x": 860,
+        "y": 40,
         "wires": []
     },
     {
@@ -1236,7 +1235,7 @@
         "env": [
             {
                 "name": "Url_base",
-                "value": "http://tomcat:8080/",
+                "value": "http://10.147.17.129:8080/",
                 "type": "str"
             }
         ],
@@ -1244,15 +1243,52 @@
         "y": 80,
         "wires": [
             [
-                "e35250e9f3b28f3e"
+                "e35250e9f3b28f3e",
+                "80f44d5bfc1e3fa9"
             ],
             [
-                "3f08a1a2d094c690"
+                "80f44d5bfc1e3fa9",
+                "9e46545120461a8f"
             ]
         ]
     },
     {
-        "id": "3f08a1a2d094c690",
+        "id": "146c73fe49f8276a",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "80f44d5bfc1e3fa9",
+        "type": "mqtt out",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "topic": "casa/habitacion/autenticacion",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e8aea52a602961ef",
+        "x": 870,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "9e46545120461a8f",
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
@@ -1260,223 +1296,11 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "145e691e5ae1de05",
-        "type": "inject",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 240,
-        "wires": [
-            [
-                "46b2f3a10211ab19"
-            ]
-        ]
-    },
-    {
-        "id": "46b2f3a10211ab19",
-        "type": "file in",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "filename": "/data/config.json",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 320,
-        "y": 240,
-        "wires": [
-            [
-                "b9c4ec46251bf6f1"
-            ]
-        ]
-    },
-    {
-        "id": "b9c4ec46251bf6f1",
-        "type": "json",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 470,
-        "y": 240,
-        "wires": [
-            [
-                "9dd87115616585d2",
-                "5e43d5855c06071c"
-            ]
-        ]
-    },
-    {
-        "id": "9dd87115616585d2",
-        "type": "change",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "config",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 620,
-        "y": 240,
-        "wires": [
-            [
-                "970bdcb35ac5e2df"
-            ]
-        ]
-    },
-    {
-        "id": "665a3bc91eb75d34",
-        "type": "catch",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "scope": [
-            "46b2f3a10211ab19"
-        ],
-        "uncaught": false,
-        "x": 130,
-        "y": 320,
-        "wires": [
-            [
-                "b4da71e89a7ef73e"
-            ]
-        ]
-    },
-    {
-        "id": "b4da71e89a7ef73e",
-        "type": "function",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "func": "msg.payload={\n    urlBase:'http://magm.mooo.com'\n};\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 320,
-        "wires": [
-            [
-                "6d1fae9aa9035534"
-            ]
-        ]
-    },
-    {
-        "id": "6d1fae9aa9035534",
-        "type": "file",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "filename": "/data/config.json",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 460,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c2b4019d0e1c29dc",
-        "type": "watch",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "files": "/data/config.json",
-        "recursive": "",
-        "x": 120,
-        "y": 160,
-        "wires": [
-            [
-                "fbf39dc4ad3698e8"
-            ]
-        ]
-    },
-    {
-        "id": "fbf39dc4ad3698e8",
-        "type": "delay",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 300,
-        "y": 160,
-        "wires": [
-            [
-                "46b2f3a10211ab19"
-            ]
-        ]
-    },
-    {
-        "id": "5e43d5855c06071c",
-        "type": "debug",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 590,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "970bdcb35ac5e2df",
-        "type": "link out",
-        "z": "e6c0d6c8e0ae1dac",
-        "name": "Salida Configuración Global",
-        "mode": "link",
-        "links": [],
-        "x": 755,
-        "y": 240,
+        "x": 830,
+        "y": 100,
         "wires": []
     },
     {
