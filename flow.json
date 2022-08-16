@@ -8,14 +8,6 @@
         "env": []
     },
     {
-        "id": "2220b6480caa0384",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "dd71821a85164bc6",
         "type": "tab",
         "label": "Logica",
@@ -279,8 +271,8 @@
         ],
         "out": [
             {
-                "x": 1280,
-                "y": 140,
+                "x": 1320,
+                "y": 80,
                 "wires": [
                     {
                         "id": "eac6eeb13fe60de7",
@@ -293,8 +285,8 @@
                 ]
             },
             {
-                "x": 1020,
-                "y": 140,
+                "x": 1220,
+                "y": 100,
                 "wires": [
                     {
                         "id": "eac6eeb13fe60de7",
@@ -340,30 +332,52 @@
         "sessionExpiry": ""
     },
     {
-        "id": "9d9482d5e90eed5a",
+        "id": "24c10ebb8f16365d",
         "type": "ui_group",
-        "name": "Lista de Productos",
-        "tab": "7accdefacf75cafe",
+        "name": "Group 1",
+        "tab": "",
         "order": 1,
         "disp": true,
-        "width": "19",
+        "width": "10",
         "collapse": false,
         "className": ""
     },
     {
-        "id": "7accdefacf75cafe",
+        "id": "a2d534a762f95492",
         "type": "ui_tab",
-        "name": "Productos",
+        "name": "Grafico",
         "icon": "dashboard",
-        "order": 3,
+        "order": 1,
         "disabled": false,
         "hidden": false
     },
     {
-        "id": "5788fa52033a036e",
+        "id": "4ca3956db57fe0c5",
+        "type": "ui_group",
+        "name": "Barras",
+        "tab": "a2d534a762f95492",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "838c5a8c6dfb59c9",
+        "type": "ui_group",
+        "name": "Tabla",
+        "tab": "a2d534a762f95492",
+        "order": 2,
+        "disp": true,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8bb39f7211ad356d",
         "type": "ui_base",
         "theme": {
-            "name": "theme-light",
+            "name": "theme-dark",
             "lightTheme": {
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
@@ -375,7 +389,8 @@
                 "default": "#097479",
                 "baseColor": "#097479",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "customTheme": {
                 "name": "Untitled Theme 1",
@@ -385,44 +400,44 @@
             },
             "themeState": {
                 "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
+                    "default": "#097479",
+                    "value": "#097479",
                     "edited": false
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#097479",
                     "edited": false
                 },
                 "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
                     "value": "#111111",
                     "edited": false
                 },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#097479",
                     "edited": false
                 },
                 "widget-borderColor": {
-                    "value": "#ffffff",
+                    "value": "#333333",
                     "edited": false
                 },
                 "base-font": {
@@ -1183,8 +1198,8 @@
             "c262730f8caecead"
         ],
         "uncaught": false,
-        "x": 1030,
-        "y": 200,
+        "x": 1210,
+        "y": 180,
         "wires": [
             []
         ]
@@ -1207,7 +1222,8 @@
         "wires": [
             [
                 "cbc83ec7c5495892",
-                "146c73fe49f8276a"
+                "146c73fe49f8276a",
+                "11b1fc5e52db6280"
             ]
         ]
     },
@@ -1223,8 +1239,8 @@
                 "type": "str"
             }
         ],
-        "x": 860,
-        "y": 40,
+        "x": 720,
+        "y": 60,
         "wires": []
     },
     {
@@ -1283,8 +1299,8 @@
         "correl": "",
         "expiry": "",
         "broker": "e8aea52a602961ef",
-        "x": 870,
-        "y": 160,
+        "x": 770,
+        "y": 180,
         "wires": []
     },
     {
@@ -1299,8 +1315,159 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 830,
+        "x": 710,
         "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d9f06614a9d9f77e",
+        "type": "ui_chart",
+        "z": "698bdcf08b44c5be",
+        "name": "Grafico de barras en tiempo real",
+        "group": "4ca3956db57fe0c5",
+        "order": 0,
+        "width": "20",
+        "height": "5",
+        "label": "",
+        "chartType": "horizontalBar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 610,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "53d40284106bd50a",
+        "type": "ui_table",
+        "z": "698bdcf08b44c5be",
+        "group": "838c5a8c6dfb59c9",
+        "name": "",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 470,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "11b1fc5e52db6280",
+        "type": "template",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "[{\n    \"Temperatura\":\"{{payload.rawData.temperatura}}\",\n    \"Humedad\":\"{{payload.rawData.humedad}}\",\n    \"Presion\":\"{{payload.rawData.presion}}\",\n    \"Altitud\":\"{{payload.altitud}}\",\n    \"Punto_de_Rocio\":\"{{payload.puntoRocio}}\"\n}]",
+        "output": "json",
+        "x": 140,
+        "y": 360,
+        "wires": [
+            [
+                "53d40284106bd50a",
+                "03f8a2d0f2f90eb7",
+                "f65369cb5405591b"
+            ]
+        ]
+    },
+    {
+        "id": "e612c287108c70b3",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "03f8a2d0f2f90eb7",
+        "type": "function",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "func": "var presion = {};\npresion.topic = 'Presion hPa';\nvar humedad = {};\nhumedad.topic = 'Humedad %';\nvar temperatura = {};\ntemperatura.topic = 'Temperatura °C';\nvar altitud = {};\naltitud.topic = 'Altitud Mts';\nvar puntoDeRocio = {};\npuntoDeRocio.topic = 'Punto De Rocio °C';\n\npresion.payload = msg.payload[0].Presion\nhumedad.payload = msg.payload[0].Humedad\ntemperatura.payload = msg.payload[0].Temperatura\naltitud.payload = msg.payload[0].Altitud\npuntoDeRocio.payload = msg.payload[0].Punto_de_Rocio\n\nreturn [presion, humedad, temperatura , altitud, puntoDeRocio];",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "d9f06614a9d9f77e",
+                "e612c287108c70b3"
+            ],
+            [
+                "d9f06614a9d9f77e",
+                "e612c287108c70b3"
+            ],
+            [
+                "d9f06614a9d9f77e",
+                "e612c287108c70b3"
+            ],
+            [
+                "d9f06614a9d9f77e",
+                "e612c287108c70b3"
+            ],
+            [
+                "d9f06614a9d9f77e",
+                "e612c287108c70b3"
+            ]
+        ]
+    },
+    {
+        "id": "f65369cb5405591b",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 380,
         "wires": []
     },
     {
@@ -1623,7 +1790,7 @@
         "id": "5d748ea21891f709",
         "type": "ui_table",
         "z": "dd71821a85164bc6",
-        "group": "9d9482d5e90eed5a",
+        "group": "",
         "name": "",
         "order": 0,
         "width": 0,
