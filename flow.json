@@ -1235,7 +1235,7 @@
         "env": [
             {
                 "name": "Url_base",
-                "value": "http://10.147.17.129:8080/",
+                "value": "http://tomcata:8080/",
                 "type": "str"
             }
         ],
@@ -1251,7 +1251,7 @@
         "env": [
             {
                 "name": "Url_base",
-                "value": "http://10.147.17.129:8080/",
+                "value": "http://tomcata:8080/",
                 "type": "str"
             }
         ],
@@ -1308,7 +1308,7 @@
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1357,8 +1357,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 610,
-        "y": 260,
+        "x": 790,
+        "y": 300,
         "wires": [
             []
         ]
@@ -1375,7 +1375,7 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 490,
+        "x": 610,
         "y": 480,
         "wires": []
     },
@@ -1405,7 +1405,7 @@
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1413,8 +1413,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 650,
-        "y": 320,
+        "x": 830,
+        "y": 360,
         "wires": []
     },
     {
@@ -1428,8 +1428,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 300,
+        "x": 520,
+        "y": 340,
         "wires": [
             [
                 "d9f06614a9d9f77e",
@@ -1466,9 +1466,238 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 510,
-        "y": 380,
+        "x": 690,
+        "y": 420,
         "wires": []
+    },
+    {
+        "id": "b914c75db0fd91d6",
+        "type": "comment",
+        "z": "698bdcf08b44c5be",
+        "name": "10.147.17.128",
+        "info": "",
+        "x": 210,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "379efbdee2187811",
+        "type": "inject",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 620,
+        "wires": [
+            [
+                "a27053ee9e168606"
+            ]
+        ]
+    },
+    {
+        "id": "a27053ee9e168606",
+        "type": "function",
+        "z": "698bdcf08b44c5be",
+        "name": "Ultima lectura",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `http://tomcata:8080/historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "34d41dbac90eb542"
+            ]
+        ]
+    },
+    {
+        "id": "34d41dbac90eb542",
+        "type": "http request",
+        "z": "698bdcf08b44c5be",
+        "name": "Ultima lectura",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": true,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 660,
+        "y": 620,
+        "wires": [
+            [
+                "c23ddb4e84297ac3"
+            ]
+        ]
+    },
+    {
+        "id": "c23ddb4e84297ac3",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "337e2a840ab77fbe",
+        "type": "catch",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "scope": [
+            "a27053ee9e168606",
+            "540a82bb03b78208"
+        ],
+        "uncaught": false,
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "e35250e9f3b28f3e"
+            ]
+        ]
+    },
+    {
+        "id": "8646e68bb5f1142d",
+        "type": "inject",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 680,
+        "wires": [
+            [
+                "540a82bb03b78208"
+            ]
+        ]
+    },
+    {
+        "id": "540a82bb03b78208",
+        "type": "function",
+        "z": "698bdcf08b44c5be",
+        "name": "Obtener pagina",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/asc/2/3?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 680,
+        "wires": [
+            [
+                "e3c3bde36ef7855b"
+            ]
+        ]
+    },
+    {
+        "id": "e3c3bde36ef7855b",
+        "type": "http request",
+        "z": "698bdcf08b44c5be",
+        "name": "Obtener pagina",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": true,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 660,
+        "y": 680,
+        "wires": [
+            [
+                "ae622bcc9ac4df2c"
+            ]
+        ]
+    },
+    {
+        "id": "ae622bcc9ac4df2c",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "590cee6d58c897ad",
+        "type": "inject",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "e35250e9f3b28f3e"
+            ]
+        ]
     },
     {
         "id": "634946f549635704",
