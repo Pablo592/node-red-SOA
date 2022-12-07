@@ -309,7 +309,7 @@
         "id": "e8aea52a602961ef",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "10.147.17.83",
+        "broker": "10.147.17.90",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -1114,7 +1114,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\n    \"fechaHoraRecepcion\":\"\",\n    \"rawData\":{\n        \"temperatura\":\"{{payload.rawData.temperatura}}\",\n        \"humedad\":\"{{payload.rawData.humedad}}\",\n        \"presion\":\"{{payload.rawData.presion}}\"\n    },\n    \"ubicacion\":{\n        \"ciudad\":\"{{payload.ubicacion.ciudad}}\",\n        \"region\":\"{{payload.ubicacion.region}}\",\n        \"pais\":\"{{payload.ubicacion.pais}}\",\n        \"coordenadas\":\"{{payload.ubicacion.coordenadas}}\",\n        \"codigoPostal\":\"{{payload.ubicacion.codigoPostal}}\",\n        \"zonaHoraria\":\"{{payload.ubicacion.zonaHoraria}}\"\n    },\n    \"categoria\":\"{{payload.categoria}}\",\n    \"subCategoria\":\"{{payload.subCategoria}}\",\n    \"identificador\":\"{{payload.identificador}}\"\n}",
+        "template": "{\n    \"fechaHoraRecepcion\":\"\",\n    \"rawData\":{\n        \"temperatura\":\"{{payload.rawData.temperatura}}\",\n        \"humedad\":\"{{payload.rawData.humedad}}\",\n        \"presion\":\"{{payload.rawData.presion}}\"\n    },\n    \"ubicacion\":{\n        \"ciudad\":\"{{payload.ubicacion.ciudad}}\",\n        \"region\":\"{{payload.ubicacion.region}}\",\n        \"pais\":\"{{payload.ubicacion.pais}}\",\n        \"coordenadas\":\"{{payload.ubicacion.coordenadas}}\",\n        \"codigoPostal\":\"{{payload.ubicacion.codigoPostal}}\",\n        \"zonaHoraria\":\"{{payload.ubicacion.zonaHoraria}}\"\n    },\n    \"categoria\":\"{{payload.categoria}}\",\n    \"subCategoria\":\"{{payload.subCategoria}}\",\n    \"identificador\":\"{{payload.identificador}}\",\n    \"puntoRocio\":{{payload.puntoRocio}},\n    \"altitud\":{{payload.altitud}}\n}",
         "output": "json",
         "x": 310,
         "y": 80,
@@ -1250,7 +1250,7 @@
                 "type": "str"
             }
         ],
-        "x": 720,
+        "x": 760,
         "y": 60,
         "wires": []
     },
@@ -1284,7 +1284,7 @@
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1310,7 +1310,7 @@
         "correl": "",
         "expiry": "",
         "broker": "e8aea52a602961ef",
-        "x": 770,
+        "x": 910,
         "y": 180,
         "wires": []
     },
@@ -1352,7 +1352,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 790,
+        "x": 1030,
         "y": 300,
         "wires": [
             []
@@ -1418,8 +1418,8 @@
         "z": "698bdcf08b44c5be",
         "name": "10.147.17.128",
         "info": "",
-        "x": 210,
-        "y": 760,
+        "x": 190,
+        "y": 1100,
         "wires": []
     },
     {
@@ -1436,14 +1436,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 240,
+        "x": 250,
         "y": 620,
         "wires": [
             [
@@ -1487,7 +1487,9 @@
         "x": 660,
         "y": 620,
         "wires": [
-            []
+            [
+                "b3987e63b605efcd"
+            ]
         ]
     },
     {
@@ -1524,7 +1526,7 @@
         "type": "function",
         "z": "698bdcf08b44c5be",
         "name": "Obtener pagina",
-        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif (global.get('numPag') != undefined && global.get('tamPag') != undefined)\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/asc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\nelse\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/asc/2/3?token=${token.authtoken}`;\n\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif ((global.get('numPag') != undefined || global.get('numPag') != \"\") && (global.get('tamPag') != undefined) || global.get('tamPag') != \"\")\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\nelse\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/2/3?token=${token.authtoken}`;\n\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1556,7 +1558,8 @@
         "y": 680,
         "wires": [
             [
-                "01e2a9c046c9d4c9"
+                "01e2a9c046c9d4c9",
+                "adc3840d7e21fb55"
             ]
         ]
     },
@@ -1646,7 +1649,7 @@
         "type": "function",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "func": "var aux = {\n    'FechaRecepcion':'',\n    'Temperatura':'',\n    'Humedad':'',\n    'Presion':'',\n    'Categoria':'',\n    'SubCategoria':'',\n    'Identificador':'',\n    'Ciudad':'',\n    'Region':'',\n    'Pais':'',\n    'Coordenadas':'',\n    'CodigoPostal':'',\n    'ZonaHoraria':''\n}\n\nvar auxi = new Array(msg.payload.length);\n\nfor(let i = 0;i < msg.payload.length;i++) {\n    aux.FechaRecepcion = msg.payload[i].fechaHoraRecepcion;\n    aux.Temperatura = msg.payload[i].rawData.temperatura;\n    aux.Humedad = msg.payload[i].rawData.humedad;\n    aux.Presion = msg.payload[i].rawData.presion;\n    aux.Categoria = msg.payload[i].categoria;\n    aux.SubCategoria = msg.payload[i].subCategoria;\n    aux.Identificador = msg.payload[i].identificador;\n    aux.Ciudad = msg.payload[i].ubicacion.ciudad;\n    aux.Region = msg.payload[i].ubicacion.region;\n    aux.Pais = msg.payload[i].ubicacion.pais;\n    aux.Coordenadas = msg.payload[i].ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload[i].ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload[i].ubicacion.zonaHoraria;\n    auxi[i] = JSON.parse(JSON.stringify(aux));\n}\n\nmsg.payload = auxi;\n\nreturn msg;",
+        "func": "var aux = {\n    'FechaRecepcion':'',\n    'Temperatura':'',\n    'Humedad':'',\n    'Presion':'',\n    'Categoria':'',\n    'SubCategoria':'',\n    'Identificador':'',\n    'Ciudad':'',\n    'Region':'',\n    'Pais':'',\n    'Coordenadas':'',\n    'CodigoPostal':'',\n    'ZonaHoraria':''\n}\n\nvar auxi = new Array(msg.payload.length);\n\nif (msg.payload.fechaHoraRecepcion != undefined){\n    aux.FechaRecepcion = msg.payload.fechaHoraRecepcion;\n    aux.Temperatura = msg.payload.rawData.temperatura;\n    aux.Humedad = msg.payload.rawData.humedad;\n    aux.Presion = msg.payload.rawData.presion;\n    aux.Categoria = msg.payload.categoria;\n    aux.SubCategoria = msg.payload.subCategoria;\n    aux.Identificador = msg.payload.identificador;\n    aux.Ciudad = msg.payload.ubicacion.ciudad;\n    aux.Region = msg.payload.ubicacion.region;\n    aux.Pais = msg.payload.ubicacion.pais;\n    aux.Coordenadas = msg.payload.ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload.ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload.ubicacion.zonaHoraria;\n\n    msg.payload = aux;\n    return msg;\n}\n\n\nfor(let i = 0;i < msg.payload.length;i++) {\n    aux.FechaRecepcion = msg.payload[i].fechaHoraRecepcion;\n    aux.Temperatura = msg.payload[i].rawData.temperatura;\n    aux.Humedad = msg.payload[i].rawData.humedad;\n    aux.Presion = msg.payload[i].rawData.presion;\n    aux.Categoria = msg.payload[i].categoria;\n    aux.SubCategoria = msg.payload[i].subCategoria;\n    aux.Identificador = msg.payload[i].identificador;\n    aux.Ciudad = msg.payload[i].ubicacion.ciudad;\n    aux.Region = msg.payload[i].ubicacion.region;\n    aux.Pais = msg.payload[i].ubicacion.pais;\n    aux.Coordenadas = msg.payload[i].ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload[i].ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload[i].ubicacion.zonaHoraria;\n    auxi[i] = JSON.parse(JSON.stringify(aux));\n}\n\nmsg.payload = auxi;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1656,7 +1659,7 @@
         "y": 760,
         "wires": [
             [
-                "53d40284106bd50a"
+                "29954d75b609d90e"
             ]
         ]
     },
@@ -1672,7 +1675,7 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 1050,
+        "x": 1190,
         "y": 760,
         "wires": []
     },
@@ -1738,7 +1741,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
+        "x": 910,
         "y": 100,
         "wires": []
     },
@@ -1755,8 +1758,200 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
-        "y": 440,
+        "x": 1010,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "adc3840d7e21fb55",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "76868d25a3a84b77",
+        "type": "function",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "func": "var presion = {};\npresion.topic = 'Presion hPa';\nvar humedad = {};\nhumedad.topic = 'Humedad %';\nvar temperatura = {};\ntemperatura.topic = 'Temperatura °C';\nvar altitud = {};\naltitud.topic = 'Altitud Mts';\nvar puntoDeRocio = {};\npuntoDeRocio.topic = 'Punto De Rocio °C';\n\npresion.payload = msg.payload.rawData.presion;\nhumedad.payload = msg.payload.rawData.humedad;\ntemperatura.payload = msg.payload.rawData.temperatura;\naltitud.payload = msg.payload.altitud\npuntoDeRocio.payload = msg.payload.puntoRocio\n\nreturn [presion, humedad, temperatura, altitud, puntoDeRocio];",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 600,
+        "wires": [
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ]
+        ]
+    },
+    {
+        "id": "dfd0496f51beaa8d",
+        "type": "ui_chart",
+        "z": "698bdcf08b44c5be",
+        "name": "Grafico de barras en tiempo real",
+        "group": "4ca3956db57fe0c5",
+        "order": 0,
+        "width": "20",
+        "height": "5",
+        "label": "",
+        "chartType": "horizontalBar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1430,
+        "y": 600,
+        "wires": [
+            [
+                "9a1d4730747456e6"
+            ]
+        ]
+    },
+    {
+        "id": "b3987e63b605efcd",
+        "type": "switch",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "403",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "403",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 600,
+        "wires": [
+            [
+                "e35250e9f3b28f3e"
+            ],
+            [
+                "76868d25a3a84b77",
+                "86b13de880ff05a2"
+            ]
+        ]
+    },
+    {
+        "id": "29954d75b609d90e",
+        "type": "switch",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "403",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "403",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1010,
+        "y": 760,
+        "wires": [
+            [
+                "e35250e9f3b28f3e"
+            ],
+            [
+                "53d40284106bd50a"
+            ]
+        ]
+    },
+    {
+        "id": "9a1d4730747456e6",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "86b13de880ff05a2",
+        "type": "debug",
+        "z": "698bdcf08b44c5be",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 480,
         "wires": []
     },
     {
