@@ -306,6 +306,56 @@
         "color": "#DDAA99"
     },
     {
+        "id": "b058630992446840",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "e9445fa4f5a667f6",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 220,
+                "wires": [
+                    {
+                        "id": "a27053ee9e168606"
+                    },
+                    {
+                        "id": "540a82bb03b78208"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 840,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "b3987e63b605efcd",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1020,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "29954d75b609d90e",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": "e8aea52a602961ef",
         "type": "mqtt-broker",
         "name": "",
@@ -1216,6 +1266,362 @@
         ]
     },
     {
+        "id": "a27053ee9e168606",
+        "type": "function",
+        "z": "e9445fa4f5a667f6",
+        "name": "Ultima lectura",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `http://tomcata:8080/historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            [
+                "34d41dbac90eb542"
+            ]
+        ]
+    },
+    {
+        "id": "34d41dbac90eb542",
+        "type": "http request",
+        "z": "e9445fa4f5a667f6",
+        "name": "Ultima lectura",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": true,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "b3987e63b605efcd"
+            ]
+        ]
+    },
+    {
+        "id": "540a82bb03b78208",
+        "type": "function",
+        "z": "e9445fa4f5a667f6",
+        "name": "Obtener pagina",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif ((global.get('numPag') != undefined || global.get('numPag') != \"\") && (global.get('tamPag') != undefined) || global.get('tamPag') != \"\")\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\nelse\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/2/3?token=${token.authtoken}`;\n\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "e3c3bde36ef7855b"
+            ]
+        ]
+    },
+    {
+        "id": "e3c3bde36ef7855b",
+        "type": "http request",
+        "z": "e9445fa4f5a667f6",
+        "name": "Obtener pagina",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": true,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "01e2a9c046c9d4c9"
+            ]
+        ]
+    },
+    {
+        "id": "194e4a48a883974e",
+        "type": "ui_text_input",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "label": "Numero de Pagina",
+        "tooltip": "",
+        "group": "317af48ad813ab54",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [
+                "89e5db99220adb72"
+            ]
+        ]
+    },
+    {
+        "id": "172e4fc2e43dff01",
+        "type": "ui_text_input",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "label": "Tamaño de Pagina",
+        "tooltip": "",
+        "group": "317af48ad813ab54",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "9dc4d716cbcd444a"
+            ]
+        ]
+    },
+    {
+        "id": "01e2a9c046c9d4c9",
+        "type": "function",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "func": "var aux = {\n    'FechaRecepcion':'',\n    'Temperatura':'',\n    'Humedad':'',\n    'Presion':'',\n    'Categoria':'',\n    'SubCategoria':'',\n    'Identificador':'',\n    'Ciudad':'',\n    'Region':'',\n    'Pais':'',\n    'Coordenadas':'',\n    'CodigoPostal':'',\n    'ZonaHoraria':''\n}\n\nvar auxi = new Array(msg.payload.length);\n\nif (msg.payload.fechaHoraRecepcion != undefined){\n    aux.FechaRecepcion = msg.payload.fechaHoraRecepcion;\n    aux.Temperatura = msg.payload.rawData.temperatura;\n    aux.Humedad = msg.payload.rawData.humedad;\n    aux.Presion = msg.payload.rawData.presion;\n    aux.Categoria = msg.payload.categoria;\n    aux.SubCategoria = msg.payload.subCategoria;\n    aux.Identificador = msg.payload.identificador;\n    aux.Ciudad = msg.payload.ubicacion.ciudad;\n    aux.Region = msg.payload.ubicacion.region;\n    aux.Pais = msg.payload.ubicacion.pais;\n    aux.Coordenadas = msg.payload.ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload.ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload.ubicacion.zonaHoraria;\n\n    msg.payload = aux;\n    return msg;\n}\n\n\nfor(let i = 0;i < msg.payload.length;i++) {\n    aux.FechaRecepcion = msg.payload[i].fechaHoraRecepcion;\n    aux.Temperatura = msg.payload[i].rawData.temperatura;\n    aux.Humedad = msg.payload[i].rawData.humedad;\n    aux.Presion = msg.payload[i].rawData.presion;\n    aux.Categoria = msg.payload[i].categoria;\n    aux.SubCategoria = msg.payload[i].subCategoria;\n    aux.Identificador = msg.payload[i].identificador;\n    aux.Ciudad = msg.payload[i].ubicacion.ciudad;\n    aux.Region = msg.payload[i].ubicacion.region;\n    aux.Pais = msg.payload[i].ubicacion.pais;\n    aux.Coordenadas = msg.payload[i].ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload[i].ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload[i].ubicacion.zonaHoraria;\n    auxi[i] = JSON.parse(JSON.stringify(aux));\n}\n\nmsg.payload = auxi;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 340,
+        "wires": [
+            [
+                "29954d75b609d90e"
+            ]
+        ]
+    },
+    {
+        "id": "53d40284106bd50a",
+        "type": "ui_table",
+        "z": "e9445fa4f5a667f6",
+        "group": "838c5a8c6dfb59c9",
+        "name": "",
+        "order": 0,
+        "width": "30",
+        "height": "10",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1150,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "89e5db99220adb72",
+        "type": "change",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "numPag",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9dc4d716cbcd444a",
+        "type": "change",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "tamPag",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "76868d25a3a84b77",
+        "type": "function",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "func": "var presion = {};\npresion.topic = 'Presion hPa';\nvar humedad = {};\nhumedad.topic = 'Humedad %';\nvar temperatura = {};\ntemperatura.topic = 'Temperatura °C';\nvar altitud = {};\naltitud.topic = 'Altitud Mts';\nvar puntoDeRocio = {};\npuntoDeRocio.topic = 'Punto De Rocio °C';\n\npresion.payload = msg.payload.rawData.presion;\nhumedad.payload = msg.payload.rawData.humedad;\ntemperatura.payload = msg.payload.rawData.temperatura;\naltitud.payload = msg.payload.altitud\npuntoDeRocio.payload = msg.payload.puntoRocio\n\nreturn [presion, humedad, temperatura, altitud, puntoDeRocio];",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 180,
+        "wires": [
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ],
+            [
+                "dfd0496f51beaa8d"
+            ]
+        ]
+    },
+    {
+        "id": "dfd0496f51beaa8d",
+        "type": "ui_chart",
+        "z": "e9445fa4f5a667f6",
+        "name": "Grafico de barras en tiempo real",
+        "group": "4ca3956db57fe0c5",
+        "order": 0,
+        "width": "20",
+        "height": "5",
+        "label": "",
+        "chartType": "horizontalBar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1310,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b3987e63b605efcd",
+        "type": "switch",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "403",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "403",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "76868d25a3a84b77"
+            ]
+        ]
+    },
+    {
+        "id": "29954d75b609d90e",
+        "type": "switch",
+        "z": "e9445fa4f5a667f6",
+        "name": "",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "403",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "403",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 890,
+        "y": 340,
+        "wires": [
+            [],
+            [
+                "53d40284106bd50a"
+            ]
+        ]
+    },
+    {
         "id": "7de4b7a2e4130353",
         "type": "mqtt in",
         "z": "698bdcf08b44c5be",
@@ -1250,8 +1656,8 @@
                 "type": "str"
             }
         ],
-        "x": 760,
-        "y": 60,
+        "x": 720,
+        "y": 180,
         "wires": []
     },
     {
@@ -1284,7 +1690,7 @@
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1310,8 +1716,8 @@
         "correl": "",
         "expiry": "",
         "broker": "e8aea52a602961ef",
-        "x": 910,
-        "y": 180,
+        "x": 870,
+        "y": 40,
         "wires": []
     },
     {
@@ -1443,123 +1849,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 250,
-        "y": 620,
+        "x": 150,
+        "y": 500,
         "wires": [
             [
-                "a27053ee9e168606"
-            ]
-        ]
-    },
-    {
-        "id": "a27053ee9e168606",
-        "type": "function",
-        "z": "698bdcf08b44c5be",
-        "name": "Ultima lectura",
-        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `http://tomcata:8080/historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 440,
-        "y": 620,
-        "wires": [
-            [
-                "34d41dbac90eb542"
-            ]
-        ]
-    },
-    {
-        "id": "34d41dbac90eb542",
-        "type": "http request",
-        "z": "698bdcf08b44c5be",
-        "name": "Ultima lectura",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": true,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 660,
-        "y": 620,
-        "wires": [
-            [
-                "b3987e63b605efcd"
-            ]
-        ]
-    },
-    {
-        "id": "8646e68bb5f1142d",
-        "type": "inject",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 250,
-        "y": 680,
-        "wires": [
-            [
-                "540a82bb03b78208"
-            ]
-        ]
-    },
-    {
-        "id": "540a82bb03b78208",
-        "type": "function",
-        "z": "698bdcf08b44c5be",
-        "name": "Obtener pagina",
-        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif ((global.get('numPag') != undefined || global.get('numPag') != \"\") && (global.get('tamPag') != undefined) || global.get('tamPag') != \"\")\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\nelse\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/2/3?token=${token.authtoken}`;\n\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 440,
-        "y": 680,
-        "wires": [
-            [
-                "e3c3bde36ef7855b"
-            ]
-        ]
-    },
-    {
-        "id": "e3c3bde36ef7855b",
-        "type": "http request",
-        "z": "698bdcf08b44c5be",
-        "name": "Obtener pagina",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": true,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 660,
-        "y": 680,
-        "wires": [
-            [
-                "01e2a9c046c9d4c9",
-                "adc3840d7e21fb55"
+                "9dcc31079e1e69bc"
             ]
         ]
     },
@@ -1593,155 +1887,18 @@
         ]
     },
     {
-        "id": "194e4a48a883974e",
-        "type": "ui_text_input",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "label": "Numero de Pagina",
-        "tooltip": "",
-        "group": "317af48ad813ab54",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "mode": "text",
-        "delay": 300,
-        "topic": "topic",
-        "sendOnBlur": true,
-        "className": "",
-        "topicType": "msg",
-        "x": 230,
-        "y": 500,
-        "wires": [
-            [
-                "89e5db99220adb72"
-            ]
-        ]
-    },
-    {
-        "id": "172e4fc2e43dff01",
-        "type": "ui_text_input",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "label": "Tamaño de Pagina",
-        "tooltip": "",
-        "group": "317af48ad813ab54",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "mode": "text",
-        "delay": 300,
-        "topic": "topic",
-        "sendOnBlur": true,
-        "className": "",
-        "topicType": "msg",
-        "x": 230,
-        "y": 540,
-        "wires": [
-            [
-                "9dc4d716cbcd444a"
-            ]
-        ]
-    },
-    {
-        "id": "01e2a9c046c9d4c9",
-        "type": "function",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "func": "var aux = {\n    'FechaRecepcion':'',\n    'Temperatura':'',\n    'Humedad':'',\n    'Presion':'',\n    'Categoria':'',\n    'SubCategoria':'',\n    'Identificador':'',\n    'Ciudad':'',\n    'Region':'',\n    'Pais':'',\n    'Coordenadas':'',\n    'CodigoPostal':'',\n    'ZonaHoraria':''\n}\n\nvar auxi = new Array(msg.payload.length);\n\nif (msg.payload.fechaHoraRecepcion != undefined){\n    aux.FechaRecepcion = msg.payload.fechaHoraRecepcion;\n    aux.Temperatura = msg.payload.rawData.temperatura;\n    aux.Humedad = msg.payload.rawData.humedad;\n    aux.Presion = msg.payload.rawData.presion;\n    aux.Categoria = msg.payload.categoria;\n    aux.SubCategoria = msg.payload.subCategoria;\n    aux.Identificador = msg.payload.identificador;\n    aux.Ciudad = msg.payload.ubicacion.ciudad;\n    aux.Region = msg.payload.ubicacion.region;\n    aux.Pais = msg.payload.ubicacion.pais;\n    aux.Coordenadas = msg.payload.ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload.ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload.ubicacion.zonaHoraria;\n\n    msg.payload = aux;\n    return msg;\n}\n\n\nfor(let i = 0;i < msg.payload.length;i++) {\n    aux.FechaRecepcion = msg.payload[i].fechaHoraRecepcion;\n    aux.Temperatura = msg.payload[i].rawData.temperatura;\n    aux.Humedad = msg.payload[i].rawData.humedad;\n    aux.Presion = msg.payload[i].rawData.presion;\n    aux.Categoria = msg.payload[i].categoria;\n    aux.SubCategoria = msg.payload[i].subCategoria;\n    aux.Identificador = msg.payload[i].identificador;\n    aux.Ciudad = msg.payload[i].ubicacion.ciudad;\n    aux.Region = msg.payload[i].ubicacion.region;\n    aux.Pais = msg.payload[i].ubicacion.pais;\n    aux.Coordenadas = msg.payload[i].ubicacion.coordenadas;\n    aux.CodigoPostal = msg.payload[i].ubicacion.codigoPostal;\n    aux.ZonaHoraria = msg.payload[i].ubicacion.zonaHoraria;\n    auxi[i] = JSON.parse(JSON.stringify(aux));\n}\n\nmsg.payload = auxi;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 840,
-        "y": 760,
-        "wires": [
-            [
-                "29954d75b609d90e"
-            ]
-        ]
-    },
-    {
-        "id": "53d40284106bd50a",
-        "type": "ui_table",
-        "z": "698bdcf08b44c5be",
-        "group": "838c5a8c6dfb59c9",
-        "name": "",
-        "order": 0,
-        "width": "30",
-        "height": "10",
-        "columns": [],
-        "outputs": 0,
-        "cts": false,
-        "x": 1190,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "89e5db99220adb72",
-        "type": "change",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "numPag",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 490,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9dc4d716cbcd444a",
-        "type": "change",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "tamPag",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 490,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "9e46545120461a8f",
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 910,
+        "x": 1070,
         "y": 100,
         "wires": []
     },
@@ -1763,196 +1920,20 @@
         "wires": []
     },
     {
-        "id": "adc3840d7e21fb55",
-        "type": "debug",
+        "id": "9dcc31079e1e69bc",
+        "type": "subflow:e9445fa4f5a667f6",
         "z": "698bdcf08b44c5be",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 890,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "76868d25a3a84b77",
-        "type": "function",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "func": "var presion = {};\npresion.topic = 'Presion hPa';\nvar humedad = {};\nhumedad.topic = 'Humedad %';\nvar temperatura = {};\ntemperatura.topic = 'Temperatura °C';\nvar altitud = {};\naltitud.topic = 'Altitud Mts';\nvar puntoDeRocio = {};\npuntoDeRocio.topic = 'Punto De Rocio °C';\n\npresion.payload = msg.payload.rawData.presion;\nhumedad.payload = msg.payload.rawData.humedad;\ntemperatura.payload = msg.payload.rawData.temperatura;\naltitud.payload = msg.payload.altitud\npuntoDeRocio.payload = msg.payload.puntoRocio\n\nreturn [presion, humedad, temperatura, altitud, puntoDeRocio];",
-        "outputs": 5,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1120,
-        "y": 600,
-        "wires": [
-            [
-                "dfd0496f51beaa8d"
-            ],
-            [
-                "dfd0496f51beaa8d"
-            ],
-            [
-                "dfd0496f51beaa8d"
-            ],
-            [
-                "dfd0496f51beaa8d"
-            ],
-            [
-                "dfd0496f51beaa8d"
-            ]
-        ]
-    },
-    {
-        "id": "dfd0496f51beaa8d",
-        "type": "ui_chart",
-        "z": "698bdcf08b44c5be",
-        "name": "Grafico de barras en tiempo real",
-        "group": "4ca3956db57fe0c5",
-        "order": 0,
-        "width": "20",
-        "height": "5",
-        "label": "",
-        "chartType": "horizontalBar",
-        "legend": "true",
-        "xformat": "HH:mm:ss",
-        "interpolate": "step",
-        "nodata": "",
-        "dot": false,
-        "ymin": "0",
-        "ymax": "1000",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 1430,
-        "y": 600,
-        "wires": [
-            [
-                "9a1d4730747456e6"
-            ]
-        ]
-    },
-    {
-        "id": "b3987e63b605efcd",
-        "type": "switch",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "403",
-                "vt": "str"
-            },
-            {
-                "t": "neq",
-                "v": "403",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 830,
-        "y": 600,
-        "wires": [
-            [
-                "e35250e9f3b28f3e"
-            ],
-            [
-                "76868d25a3a84b77",
-                "86b13de880ff05a2"
-            ]
-        ]
-    },
-    {
-        "id": "29954d75b609d90e",
-        "type": "switch",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "403",
-                "vt": "str"
-            },
-            {
-                "t": "neq",
-                "v": "403",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1010,
-        "y": 760,
-        "wires": [
-            [
-                "e35250e9f3b28f3e"
-            ],
-            [
-                "53d40284106bd50a"
-            ]
-        ]
-    },
-    {
-        "id": "9a1d4730747456e6",
-        "type": "debug",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1550,
+        "name": "Dashboards",
+        "x": 610,
         "y": 520,
-        "wires": []
-    },
-    {
-        "id": "86b13de880ff05a2",
-        "type": "debug",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1130,
-        "y": 480,
-        "wires": []
+        "wires": [
+            [
+                "e35250e9f3b28f3e"
+            ],
+            [
+                "e35250e9f3b28f3e"
+            ]
+        ]
     },
     {
         "id": "634946f549635704",
