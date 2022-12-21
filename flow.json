@@ -316,50 +316,51 @@
     {
         "id": "e9445fa4f5a667f6",
         "type": "subflow",
-        "name": "Subflow 2",
+        "name": "Dashboards",
         "info": "",
+        "category": "",
         "in": [
             {
                 "x": 40,
                 "y": 220,
                 "wires": [
                     {
-                        "id": "a27053ee9e168606"
-                    },
-                    {
-                        "id": "540a82bb03b78208"
+                        "id": "7d83a05b8b72176d"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 840,
-                "y": 120,
+                "x": 1120,
+                "y": 300,
                 "wires": [
                     {
                         "id": "b3987e63b605efcd",
                         "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1020,
-                "y": 280,
-                "wires": [
+                    },
                     {
                         "id": "29954d75b609d90e",
                         "port": 0
                     }
                 ]
             }
-        ]
+        ],
+        "env": [
+            {
+                "name": "Url_base",
+                "type": "str",
+                "value": "http://servicesoa.mooo.com:8080/"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "e8aea52a602961ef",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "10.147.17.90",
+        "broker": "eclipse-mosquitto",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -531,6 +532,32 @@
         "width": "6",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "02d9f0336a5415d6",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.147.17.51",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
     },
     {
         "id": "929602daf43b8229",
@@ -1270,14 +1297,14 @@
         "type": "function",
         "z": "e9445fa4f5a667f6",
         "name": "Ultima lectura",
-        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `http://tomcata:8080/historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nlet url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
-        "y": 200,
+        "x": 420,
+        "y": 260,
         "wires": [
             [
                 "34d41dbac90eb542"
@@ -1298,8 +1325,8 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 540,
-        "y": 200,
+        "x": 640,
+        "y": 260,
         "wires": [
             [
                 "b3987e63b605efcd"
@@ -1311,14 +1338,14 @@
         "type": "function",
         "z": "e9445fa4f5a667f6",
         "name": "Obtener pagina",
-        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif ((global.get('numPag') != undefined || global.get('numPag') != \"\") && (global.get('tamPag') != undefined) || global.get('tamPag') != \"\")\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\nelse\n    var url = `http://tomcata:8080/historico/order-by-subcategory/casa/habitacion/desc/2/3?token=${token.authtoken}`;\n\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
+        "func": "let token = JSON.parse(global.get(\"token\"))\n\nif ((global.get('numPag') != undefined || global.get('numPag') != \"\") && (global.get('tamPag') != undefined) || global.get('tamPag') != \"\")\n    var url = `${msg.url_base}historico/order-by-subcategory/casa/habitacion/desc/${global.get('tamPag')}/${global.get('numPag')}?token=${token.authtoken}`;\n\n//let url = `${msg.url_base}historico/last/TK01?token=${token.authtoken}`;\nmsg.url = url\nnode.warn(msg.url);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
-        "y": 260,
+        "x": 420,
+        "y": 320,
         "wires": [
             [
                 "e3c3bde36ef7855b"
@@ -1339,8 +1366,8 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 540,
-        "y": 260,
+        "x": 640,
+        "y": 320,
         "wires": [
             [
                 "01e2a9c046c9d4c9"
@@ -1410,8 +1437,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
-        "y": 340,
+        "x": 760,
+        "y": 420,
         "wires": [
             [
                 "29954d75b609d90e"
@@ -1430,8 +1457,8 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 1150,
-        "y": 340,
+        "x": 1190,
+        "y": 420,
         "wires": []
     },
     {
@@ -1495,7 +1522,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1000,
+        "x": 1040,
         "y": 180,
         "wires": [
             [
@@ -1553,7 +1580,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1310,
+        "x": 1350,
         "y": 180,
         "wires": [
             []
@@ -1581,7 +1608,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 710,
+        "x": 750,
         "y": 180,
         "wires": [
             [],
@@ -1612,12 +1639,40 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 890,
-        "y": 340,
+        "x": 930,
+        "y": 420,
         "wires": [
             [],
             [
                 "53d40284106bd50a"
+            ]
+        ]
+    },
+    {
+        "id": "7d83a05b8b72176d",
+        "type": "change",
+        "z": "e9445fa4f5a667f6",
+        "name": "PrepareRequest",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url_base",
+                "pt": "msg",
+                "to": "Url_base",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 280,
+        "wires": [
+            [
+                "a27053ee9e168606",
+                "540a82bb03b78208"
             ]
         ]
     },
@@ -1629,7 +1684,7 @@
         "topic": "casa/habitacion/tempHum",
         "qos": "2",
         "datatype": "json",
-        "broker": "e8aea52a602961ef",
+        "broker": "02d9f0336a5415d6",
         "nl": false,
         "rap": true,
         "rh": 0,
@@ -1656,8 +1711,8 @@
                 "type": "str"
             }
         ],
-        "x": 720,
-        "y": 180,
+        "x": 1200,
+        "y": 300,
         "wires": []
     },
     {
@@ -1672,7 +1727,7 @@
                 "type": "str"
             }
         ],
-        "x": 430,
+        "x": 450,
         "y": 80,
         "wires": [
             [
@@ -1715,7 +1770,7 @@
         "userProps": "",
         "correl": "",
         "expiry": "",
-        "broker": "e8aea52a602961ef",
+        "broker": "02d9f0336a5415d6",
         "x": 870,
         "y": 40,
         "wires": []
@@ -1724,6 +1779,7 @@
         "id": "d9f06614a9d9f77e",
         "type": "ui_chart",
         "z": "698bdcf08b44c5be",
+        "d": true,
         "name": "Grafico de barras en tiempo real",
         "group": "4ca3956db57fe0c5",
         "order": 0,
@@ -1758,8 +1814,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1030,
-        "y": 300,
+        "x": 690,
+        "y": 220,
         "wires": [
             []
         ]
@@ -1794,8 +1850,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 340,
+        "x": 360,
+        "y": 300,
         "wires": [
             [
                 "d9f06614a9d9f77e",
@@ -1819,16 +1875,6 @@
         ]
     },
     {
-        "id": "b914c75db0fd91d6",
-        "type": "comment",
-        "z": "698bdcf08b44c5be",
-        "name": "10.147.17.128",
-        "info": "",
-        "x": 190,
-        "y": 1100,
-        "wires": []
-    },
-    {
         "id": "379efbdee2187811",
         "type": "inject",
         "z": "698bdcf08b44c5be",
@@ -1849,40 +1895,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 150,
-        "y": 500,
+        "x": 170,
+        "y": 440,
         "wires": [
             [
                 "9dcc31079e1e69bc"
-            ]
-        ]
-    },
-    {
-        "id": "590cee6d58c897ad",
-        "type": "inject",
-        "z": "698bdcf08b44c5be",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 420,
-        "wires": [
-            [
-                "e35250e9f3b28f3e"
             ]
         ]
     },
@@ -1891,14 +1908,14 @@
         "type": "debug",
         "z": "698bdcf08b44c5be",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1070,
+        "x": 1090,
         "y": 100,
         "wires": []
     },
@@ -1915,8 +1932,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1010,
-        "y": 380,
+        "x": 650,
+        "y": 320,
         "wires": []
     },
     {
@@ -1924,12 +1941,16 @@
         "type": "subflow:e9445fa4f5a667f6",
         "z": "698bdcf08b44c5be",
         "name": "Dashboards",
-        "x": 610,
-        "y": 520,
+        "env": [
+            {
+                "name": "Url_base",
+                "value": "http://tomcata:8080/",
+                "type": "str"
+            }
+        ],
+        "x": 650,
+        "y": 440,
         "wires": [
-            [
-                "e35250e9f3b28f3e"
-            ],
             [
                 "e35250e9f3b28f3e"
             ]
